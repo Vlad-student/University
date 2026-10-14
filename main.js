@@ -2,6 +2,7 @@
 // Запуск: node main.js [файл]   (за замовчуванням registry.txt)
 
 const fs = require('fs');
+const path = require('path');
 const MaxHeap = require('./heapSort');
 
 const PASS = 60;     // мінімальний прохідний бал
@@ -33,7 +34,7 @@ function sessionId(date) {
 const isDebt = r => r.score === null || r.score < PASS;
 
 // --- основна логіка ---
-const file = process.argv[2] || 'registry.txt';
+const file = process.argv[2] || path.join(__dirname, 'registry.txt');
 const all = readRegistry(file);
 
 const lastSession = Math.max(...all.map(r => sessionId(r.date)));
