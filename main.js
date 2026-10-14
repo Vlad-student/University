@@ -2,7 +2,7 @@
 // Запуск: node main.js [файл]   (за замовчуванням registry.txt)
 
 const fs = require('fs');
-const HeapSort = require('./heapSort');
+const MaxHeap = require('./heapSort');
 
 const PASS = 60;     // мінімальний прохідний бал
 const NO_GRADE = '-'; // оцінку не отримано (і для іспиту, і для заліку)
@@ -57,11 +57,12 @@ const debtors = Object.values(students)
 
 // сортування: кількість боргів ↓, при рівності середній бал ↑
 // compare > 0 => a має йти ПІСЛЯ b
-const sorter = new HeapSort((a, b) => {
+const heap = new MaxHeap((a, b) => {
   if (a.debts.length !== b.debts.length) return b.debts.length - a.debts.length;
   return a.avg - b.avg;
 });
-const result = sorter.sort(debtors);
+heap.buildHeap([...debtors]);
+const result = heap.sort();
 
 // --- вивід ---
 console.log(`Реєстр: ${file}. Записів усього: ${all.length}, в останній сесії: ${records.length}\n`);
